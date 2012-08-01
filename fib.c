@@ -22,7 +22,7 @@ main (int argc, char *argv[]) {
         return 1;
     }
 
-    printf("0");
+    printf("%d", fibonacci(argv[1]));
 
     return 0;
 }
