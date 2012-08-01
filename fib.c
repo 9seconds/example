@@ -4,6 +4,9 @@
 
 int
 fibonacci (int number) {
+    if ( number < 2 )
+        return number;
+
     int* cache = (int*) malloc(number+1);
     return calculate_fibonacci(number, cache);
 }
