@@ -3,8 +3,13 @@
 #include <string.h>
 
 
-#define POSITION(number) ((number)-2)
-#define UNKNOWN (-1)
+#define POSITION(number)     ( (number)-2 )
+#define UNKNOWN              ( -1 )
+#define CACHE_SIZE(elements) ( sizeof(int)*( (elements)-1 ) )
+
+
+static int
+calculate_fibonacci (int number, int* cache);
 
 
 static int calculate_fibonacci (int number, int* cache);
@@ -18,12 +23,18 @@ fibonacci (int number) {
     if ( number < 2 )
         return number;
 
-    cache = (int*) malloc(sizeof(int)*(number-1));
-    memset(cache, UNKNOWN, sizeof(int)*(number-1));
+    cache = memset(
+        (int*) malloc(CACHE_SIZE(number)),
+        UNKNOWN,
+        CACHE_SIZE(number)
+    );
 
     result = calculate_fibonacci(number, cache);
 
-    free(cache);
+    if ( cache != NULL ) {
+        free(cache);
+        cache = NULL;
+    }
     return result;
 }
 
