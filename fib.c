@@ -52,7 +52,7 @@ fibonacci (int number) {
 
 
 
-#else
+#elif FIBALGOPT
 
 
 
@@ -72,6 +72,19 @@ fibonacci (int number) {
     return ( number < 2 )
         ? number
         : calculate_fibonacci(1, 0, 0, 1, number);
+}
+
+
+
+#else
+
+
+
+int
+fibonacci (int number) {
+    return ( number < 2 )
+        ? number
+        : fibonacci(number-1) + fibonacci(number-2);
 }
 
 
