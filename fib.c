@@ -8,13 +8,19 @@
 
 int
 fibonacci (int number) {
+    int* cache;
+    int  result;
+
     if ( number < 2 )
         return number;
 
-    return calculate_fibonacci(
-        number,
-        (int*) malloc(number-1)
-    );
+    cache = (int*) malloc(sizeof(int)*(number-1));
+    memset(cache, UNKNOWN, sizeof(int)*(number-1));
+
+    result = calculate_fibonacci(number, cache);
+
+    free(cache);
+    return result;
 }
 
 
