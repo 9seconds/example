@@ -7,6 +7,7 @@
 #define UNKNOWN               ( -1 )
 #define CACHE_SIZE(elements)  ( sizeof(int)*( (elements)-1 ) )
 #define EVEN(number)          ( !((number) % 2) )
+#define TRIVIAL_CHECK(number) { if ( (number) < 3 ) return (number); }
 
 
 
@@ -17,8 +18,7 @@
 
 static int
 calculate_fibonacci (int number, int* cache) {
-    if ( number < 3 )
-        return number;
+    TRIVIAL_CHECK(number)
 
     if ( cache[POSITION(number)] == UNKNOWN )
         cache[POSITION(number)] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
@@ -32,8 +32,7 @@ fibonacci (int number) {
     int* cache;
     int  result;
 
-    if ( number < 3 )
-        return number;
+    TRIVIAL_CHECK(number)
 
     cache = memset(
         (int*) malloc(CACHE_SIZE(number)),
@@ -57,7 +56,7 @@ fibonacci (int number) {
 
 
 static int
-calculate_fibonacci (int number, int* cache) {
+calculate_fibonacci (int a, int b, int p, int q, int count) {
     if ( !count )
         return b;
     else
@@ -69,9 +68,9 @@ calculate_fibonacci (int number, int* cache) {
 
 int
 fibonacci (int number) {
-    return ( number < 3 )
-        ? number
-        : calculate_fibonacci(1, 0, 0, 1, number);
+    TRIVIAL_CHECK(number)
+
+    return calculate_fibonacci(1, 0, 0, 1, number);
 }
 
 
@@ -81,10 +80,9 @@ fibonacci (int number) {
 
 int
 fibonacci (int number) {
-    int left, right, i, tmp; // f(n) = f(n-1) + f(n-2) = left + right
+    int left, right, i, tmp;
 
-    if ( number < 3 )
-        return number;
+    TRIVIAL_CHECK(number)
 
     left  = 2;
     right = 1;
@@ -98,21 +96,21 @@ fibonacci (int number) {
 }
 
 
+
 #else
 
 
 
 int
 fibonacci (int number) {
-    return ( number < 3 )
-        ? number
-        : fibonacci(number-1) + fibonacci(number-2);
+    TRIVIAL_CHECK(number)
+
+    return fibonacci(number-1) + fibonacci(number-2);
 }
 
 
 
 #endif
-
 
 
 
