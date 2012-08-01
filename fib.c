@@ -4,9 +4,19 @@
 
 int
 fibonacci (int number) {
-    return ( number < 2 )
-        ? number
-        : fibonacci(number-1) + fibonacci(number-2);
+    int* cache = (int*) malloc(number+1);
+    return calculate_fibonacci(number, cache);
+}
+
+
+static int
+calculate_fibonacci (int number, int* cache) {
+    if ( cache[number] != -1 ) {
+        return cache[number];
+    } else {
+        cache[number] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
+        return cache[number];
+    }
 }
 
 
