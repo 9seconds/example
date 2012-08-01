@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 #define POSITION(number) ((number)-2)
 #define UNKNOWN (-1)
+
+
+static int calculate_fibonacci (int number, int* cache);
 
 
 int
@@ -32,7 +36,7 @@ calculate_fibonacci (int number, int* cache) {
     if ( cache[POSITION(number)] == UNKNOWN )
         cache[POSITION(number)] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
 
-    return cache[POSITION(number)]
+    return cache[POSITION(number)];
 }
 
 
