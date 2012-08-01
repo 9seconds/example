@@ -17,7 +17,7 @@ main (int argc, char *argv[]) {
         return 1;
     }
 
-    printf("%d", fibonacci(atoi(number)));
+    printf("%d\n", fibonacci(atoi(argv[1])));
 
     return 0;
 }
