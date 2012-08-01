@@ -12,9 +12,6 @@ static int
 calculate_fibonacci (int number, int* cache);
 
 
-static int calculate_fibonacci (int number, int* cache);
-
-
 int
 fibonacci (int number) {
     int* cache;
