@@ -3,21 +3,21 @@
 #include <string.h>
 
 
-#define POSITION(number)     ( (number)-2 )
-#define UNKNOWN              ( -1 )
-#define CACHE_SIZE(elements) ( sizeof(int)*( (elements)-1 ) )
-#define EVEN(number) ( !(number % 2) )
+#define POSITION(number)      ( (number)-2 )
+#define UNKNOWN               ( -1 )
+#define CACHE_SIZE(elements)  ( sizeof(int)*( (elements)-1 ) )
+#define EVEN(number)          ( !((number) % 2) )
 
 
 
 
-#ifdef FIBCACHEDOPT
+#ifdef FIBCACHED
 
 
 
 static int
 calculate_fibonacci (int number, int* cache) {
-    if ( number < 2 )
+    if ( number < 3 )
         return number;
 
     if ( cache[POSITION(number)] == UNKNOWN )
@@ -32,7 +32,7 @@ fibonacci (int number) {
     int* cache;
     int  result;
 
-    if ( number < 2 )
+    if ( number < 3 )
         return number;
 
     cache = memset(
@@ -52,7 +52,7 @@ fibonacci (int number) {
 
 
 
-#elif FIBALGOPT
+#elif FIBALG
 
 
 
@@ -69,11 +69,33 @@ calculate_fibonacci (int number, int* cache) {
 
 int
 fibonacci (int number) {
-    return ( number < 2 )
+    return ( number < 3 )
         ? number
         : calculate_fibonacci(1, 0, 0, 1, number);
 }
 
+
+
+#elif FIBITER
+
+
+int
+fibonacci (int number) {
+    int left, right, i, tmp; // f(n) = f(n-1) + f(n-2) = left + right
+
+    if ( number < 3 )
+        return number;
+
+    left  = 2;
+    right = 1;
+    for ( i=3; i<number; ++i ) {
+        tmp   = left + right;
+        right = left;
+        left  = tmp;
+    }
+
+    return left + right;
+}
 
 
 #else
@@ -82,7 +104,7 @@ fibonacci (int number) {
 
 int
 fibonacci (int number) {
-    return ( number < 2 )
+    return ( number < 3 )
         ? number
         : fibonacci(number-1) + fibonacci(number-2);
 }
