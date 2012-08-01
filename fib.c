@@ -2,24 +2,31 @@
 #include <stdlib.h>
 
 
+#define POSITION(number) ((number)-2)
+#define UNKNOWN (-1)
+
+
 int
 fibonacci (int number) {
     if ( number < 2 )
         return number;
 
-    int* cache = (int*) malloc(number+1);
-    return calculate_fibonacci(number, cache);
+    return calculate_fibonacci(
+        number,
+        (int*) malloc(number-1)
+    );
 }
 
 
 static int
 calculate_fibonacci (int number, int* cache) {
-    if ( cache[number] != -1 ) {
-        return cache[number];
-    } else {
-        cache[number] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
-        return cache[number];
-    }
+    if ( number < 2 )
+        return number;
+
+    if ( cache[POSITION(number)] == UNKNOWN )
+        cache[POSITION(number)] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
+
+    return cache[POSITION(number)]
 }
 
 
