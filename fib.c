@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 
-#define POSITION(number) ((number)-2)
-#define UNKNOWN (-1)
+#define POSITION(number)     ((number)-2)
+#define UNKNOWN              (-1)
+#define CACHE_SIZE(elements) ( sizeof(int)*((elements)-1) )
 
 
 int
@@ -19,7 +20,10 @@ fibonacci (int number) {
 
     result = calculate_fibonacci(number, cache);
 
-    free(cache);
+    if ( cache != NULL ) {
+        free(cache);
+        cache = NULL;
+    }
     return result;
 }
 
