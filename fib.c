@@ -6,10 +6,25 @@
 #define POSITION(number)     ( (number)-2 )
 #define UNKNOWN              ( -1 )
 #define CACHE_SIZE(elements) ( sizeof(int)*( (elements)-1 ) )
+#define EVEN(number) ( !(number % 2) )
+
+
+
+
+#ifdef FIBCACHEDOPT
+
 
 
 static int
-calculate_fibonacci (int number, int* cache);
+calculate_fibonacci (int number, int* cache) {
+    if ( number < 2 )
+        return number;
+
+    if ( cache[POSITION(number)] == UNKNOWN )
+        cache[POSITION(number)] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
+
+    return cache[POSITION(number)];
+}
 
 
 int
@@ -36,16 +51,34 @@ fibonacci (int number) {
 }
 
 
+
+#else
+
+
+
 static int
 calculate_fibonacci (int number, int* cache) {
-    if ( number < 2 )
-        return number;
-
-    if ( cache[POSITION(number)] == UNKNOWN )
-        cache[POSITION(number)] = calculate_fibonacci(number-1, cache) + calculate_fibonacci(number-2, cache);
-
-    return cache[POSITION(number)];
+    if ( !count )
+        return b;
+    else
+        return ( EVEN(count) )
+            ? calculate_fibonacci(a, b, p*p+q*q, q*(2*p+q), count/2)
+            : calculate_fibonacci(q*(b+a)+a*p, b*p+a*q, p, q, count-1);
 }
+
+
+int
+fibonacci (int number) {
+    return ( number < 2 )
+        ? number
+        : calculate_fibonacci(1, 0, 0, 1, number);
+}
+
+
+
+#endif
+
+
 
 
 int
